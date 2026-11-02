@@ -1,5 +1,13 @@
 # Ride-Sharing ELT Pipeline and Data Warehouse
 
+[![CI](https://github.com/Ananya3283/ride-sharing-elt/actions/workflows/ci.yml/badge.svg)](https://github.com/Ananya3283/ride-sharing-elt/actions/workflows/ci.yml)
+![Python 3.12](https://img.shields.io/badge/python-3.12-3776AB?logo=python&logoColor=white)
+![PySpark 3.5](https://img.shields.io/badge/PySpark-3.5-E25A1C?logo=apachespark&logoColor=white)
+![Airflow 3](https://img.shields.io/badge/Airflow-3.2-017CEE?logo=apacheairflow&logoColor=white)
+![dbt](https://img.shields.io/badge/dbt-1.12-FF694B?logo=dbt&logoColor=white)
+![Postgres 16](https://img.shields.io/badge/Postgres-16-4169E1?logo=postgresql&logoColor=white)
+![License: MIT](https://img.shields.io/badge/license-MIT-green)
+
 A monthly batch ELT pipeline for **NYC Uber and Lyft trips** (TLC High Volume For-Hire Vehicle
 data, ~20M trips a month). It lands raw files in an S3-compatible data lake, cleans them with
 **PySpark**, loads them into **PostgreSQL**, and models a **star schema with dbt**. **Airflow**
@@ -18,6 +26,28 @@ PostgreSQL warehouse
    ▼               → mart_daily_company_metrics, guarded by 31 data tests
 BI / SQL analysis
 ```
+
+## Results from a real run
+
+Two months (June and July 2026) at the default 5% sample, run through Airflow in Docker on a
+laptop (12 cores, 8 GB for Docker):
+
+| | |
+|---|---|
+| Trips in the warehouse | 2,083,221 (June 1,037,871; July 1,045,350) |
+| dbt data tests | 31 of 31 passing |
+| Runtime for one month | ~4 min: extract 115 s, Spark transform 56 s, load 38 s, dbt run 24 s, dbt test 15 s |
+| Retries | The June download from TLC timed out once; Airflow's retry finished it |
+
+What the June star schema shows:
+
+| Company | Trips (sample) | Avg miles | Avg trip | Avg wait for pickup | Avg rider fare (before tips) | Driver pay as % of fare |
+|---|---|---|---|---|---|---|
+| Uber | 761,995 | 5.08 | 20.7 min | 5.9 min | $35.52 | 64% |
+| Lyft | 275,876 | 4.76 | 19.7 min | 5.5 min | $32.44 | 63% |
+
+A full design walkthrough, with the reasoning behind each choice, is in
+[docs/WALKTHROUGH.md](docs/WALKTHROUGH.md).
 
 ## Quick start
 
