@@ -1,0 +1,5 @@
+# Pipeline runtime (installed into the Airflow image)
+pyspark==3.5.9
+boto3==1.43.123
+psycopg2-binary==2.9.13
+pytest==9.2.0

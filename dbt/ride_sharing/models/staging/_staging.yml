@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: stg_fhvhv_trips
+    description: Trips with derived wait time and rider fare. One row per trip.
+    columns:
+      - name: trip_id
+        description: SHA-256 of the fields that identify a trip (built in Spark).
+        data_tests:
+          - unique
+          - not_null
+      - name: hvfhs_license_num
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["HV0002", "HV0003", "HV0004", "HV0005"]
+      - name: pickup_datetime
+        data_tests:
+          - not_null
+      - name: trip_miles
+        data_tests:
+          - non_negative
+      - name: base_passenger_fare
+        data_tests:
+          - non_negative
+      - name: driver_pay
+        data_tests:
+          - non_negative
+
+  - name: stg_taxi_zones
+    description: TLC taxi zones. One row per location id.
+    columns:
+      - name: location_id
+        data_tests:
+          - unique
+          - not_null
+      - name: borough
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["Bronx", "Brooklyn", "EWR", "Manhattan", "Queens", "Staten Island", "Unknown", "N/A"]

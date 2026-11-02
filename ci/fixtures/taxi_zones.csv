@@ -1,0 +1,8 @@
+location_id,borough,zone,service_zone
+1,EWR,Newark Airport,EWR
+132,Queens,JFK Airport,Airports
+138,Queens,LaGuardia Airport,Airports
+161,Manhattan,Midtown Center,Yellow Zone
+236,Manhattan,Upper East Side North,Yellow Zone
+61,Brooklyn,Crown Heights North,Boro Zone
+264,Unknown,N/A,N/A

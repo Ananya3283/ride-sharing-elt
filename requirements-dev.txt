@@ -1,0 +1,3 @@
+# Local development and CI (no Airflow: DAG tests run inside the container)
+-r requirements.txt
+ruff==0.17.3

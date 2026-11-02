@@ -1,0 +1,25 @@
+name: ride_sharing
+version: "1.0.0"
+profile: ride_sharing
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+
+models:
+  ride_sharing:
+    staging:
+      +materialized: view
+      +schema: staging
+    marts:
+      +materialized: table
+      +schema: marts
+
+seeds:
+  ride_sharing:
+    +schema: reference
+    hvfhs_companies:
+      +column_types:
+        license_num: text
+        company_name: text

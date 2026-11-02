@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: raw
+    description: Raw layer loaded by pipeline/load.py from the lake's staged zone.
+    schema: raw
+    tables:
+      - name: fhvhv_trips
+        description: One row per high-volume for-hire trip (Uber, Lyft, Via, Juno), cleaned by Spark.
+      - name: taxi_zones
+        description: NYC TLC taxi zone lookup (LocationID to borough and zone).
